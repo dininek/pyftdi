@@ -111,7 +111,7 @@ class BitSequenceTestCase(unittest.TestCase):
         self.assertEqual(int(BitSequence([0, 0, 1, 0])), 4)
         self.assertEqual(int(BitSequence((0, 1, 0, 0), msb=True)), 4)
         self.assertEqual(int(BitSequence(4, length=8)), 4)
-        self.assertEqual(int(BitSequence(4L, msb=True, length=8)), 32)
+        self.assertEqual(int(BitSequence(4, msb=True, length=8)), 32)
         self.assertEqual(int(BitSequence("0010")), 4)
         self.assertEqual(int(BitSequence("0100", msb=True)), 4)
         bs = BitSequence("0100", msb=True)
@@ -129,7 +129,7 @@ class BitSequenceTestCase(unittest.TestCase):
             bs[8:12] = BitZSequence(value = 'ZZZZ')
         except BitSequenceError:
             pass
-        except Exception, e:
+        except Exception as e:
             self.fail("Unexpected exception %s" % e)
         else:
             self.fail("Error was expected")
@@ -152,7 +152,7 @@ class BitSequenceTestCase(unittest.TestCase):
            bs = BitSequence(bytes_=[0x44, 0x666, 0xcc], msby=False)
         except BitSequenceError:
             pass
-        except Exception, e:
+        except Exception as e:
             self.fail("Unexpected exception %s" % e)
         else:
             self.fail("Error was expected")
@@ -171,8 +171,7 @@ class BitSequenceTestCase(unittest.TestCase):
     def test_misc(self):
         ba = BitSequence(12, msb=True, length=16)
         bb = BitSequence(12, msb=True, length=14)
-        l = [ba, bb]
-        l.sort()
+        l = sorted([ba, bb])
         self.assertEqual(str(l), "[00110000000000, 0011000000000000]")
         self.assertEqual(str(ba.tobytes()), "[48, 0]")
         self.assertEqual(str(ba.tobytes(True)), "[0, 12]")

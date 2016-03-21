@@ -1,3 +1,4 @@
+from __future__ import print_function
 # Copyright (c) 2010-2011, Emmanuel Blot <emmanuel.blot@free.fr>
 # All rights reserved.
 #
@@ -58,7 +59,7 @@ class JtagStateMachine(object):
 
     def __init__(self):
         self.states = {}
-        for s, modes in [('test_logic_reset', ('reset',' idle')),
+        for s, modes in [('test_logic_reset', ('reset', ' idle')),
                          ('run_test_idle', ('idle',)),
                          ('select_dr_scan', ('dr',)),
                          ('capture_dr', ('dr', 'shift', 'capture')),
@@ -129,7 +130,7 @@ class JtagStateMachine(object):
                 return path+[state]
             # candidate paths
             paths = []
-            for n,x in enumerate(state.exits):
+            for n, x in enumerate(state.exits):
                 # next state is self (loop around), kill the path
                 if x == state:
                     continue
@@ -151,8 +152,8 @@ class JtagStateMachine(object):
            resulting event sequence allows the JTAG state machine to advance
            from the first state to the last one of the input sequence"""
         events = []
-        for s,d in zip(path[:-1], path[1:]):
-            for e,x in enumerate(s.exits):
+        for s, d in zip(path[:-1], path[1:]):
+            for e, x in enumerate(s.exits):
                 if x == d:
                     events.append(e)
         if len(events) != len(path) - 1:
@@ -561,7 +562,7 @@ class JtagTool(object):
         PATTERN_LEN = 8
         stuck = None
         for length in range(1, MAX_REG_LEN):
-            print "Testing for length %d" % length
+            print("Testing for length %d" % length)
             if length > 5:
                 return
             zero = BitSequence(length=length)
@@ -586,7 +587,7 @@ class JtagTool(object):
                     break
                 inj.inc()
             if ok:
-                print "Register detected length: %d" % length
+                print("Register detected length: %d" % length)
                 return length
         if stuck is not None:
             raise JtagError('TDO seems to be stuck')

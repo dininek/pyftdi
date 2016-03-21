@@ -537,8 +537,8 @@ class BitField(object):
         else:
             if isinstance(value, bool):
                 value = int(value)
-            value = (value & 1L) << index
-            mask = (1L) << index
+            value = (value & 1) << index
+            mask = (1) << index
             self._val = (self._val & ~mask) | value
 
     def __int__(self):

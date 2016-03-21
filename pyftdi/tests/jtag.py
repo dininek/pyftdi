@@ -24,6 +24,7 @@
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 # EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+from __future__ import print_function
 import sys
 import time
 import unittest
@@ -52,7 +53,7 @@ class JtagTestCase(unittest.TestCase):
         self.jtag.reset()
         idcode = self.jtag.read_dr(32)
         self.jtag.go_idle()
-        print "IDCODE (reset): 0x%x" % int(idcode)
+        print("IDCODE (reset): 0x%x" % int(idcode))
 
     def test_idcode_sequence(self):
         """Read the IDCODE using the dedicated instruction"""
@@ -60,7 +61,7 @@ class JtagTestCase(unittest.TestCase):
         self.jtag.write_ir(instruction)
         idcode = self.jtag.read_dr(32)
         self.jtag.go_idle()
-        print "IDCODE (idcode): 0x%08x" % int(idcode)
+        print("IDCODE (idcode): 0x%08x" % int(idcode))
 
     def _test_detect_ir_length(self):
         """Detect the instruction register length"""

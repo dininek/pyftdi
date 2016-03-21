@@ -65,7 +65,7 @@ class FtdiSerial(UsbSerial):
                            FtdiSerial.VENDOR_IDS,
                            FtdiSerial.PRODUCT_IDS,
                            FtdiSerial.DEFAULT_VENDOR)
-        except FtdiError, e:
+        except FtdiError as e:
             raise SerialException(str(e))
 
     @classmethod

@@ -171,7 +171,7 @@ def _crccomp32():
     except ImportError:
         raise AssertionError("Python crcmod module not installed")
     crc_polynomial = 0x104C11DB7
-    crc_initial = 0xFFFFFFFFL
+    crc_initial = 0xFFFFFFFF
     crc = mkCrcFun(crc_polynomial, crc_initial, False)
     while True:
         yield crc

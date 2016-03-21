@@ -24,6 +24,7 @@
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 # EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+from __future__ import print_function
 import sys
 import time
 from pyftdi.jtag import JtagEngine
@@ -52,7 +53,7 @@ class ArmJtag(object):
         """Read the IDCODE right after a JTAG reset"""
         idcode = self.jtag.read_dr(32)
         self.jtag.go_idle()
-        print "IDCODE: 0x%x" % int(idcode)
+        print("IDCODE: 0x%x" % int(idcode))
         return int(idcode)
 
     def get_idcode_from_instruction(self):
@@ -65,8 +66,8 @@ class ArmJtag(object):
         partnumber = idcode[12:28]
         manufacturer = idcode[1:12]
         ieee = idcode[0:1]
-        print "IDCODE: 0x%x %s %s %s %s" % (int(idcode),
-            revision, partnumber, manufacturer, ieee)
+        print("IDCODE: 0x%x %s %s %s %s" % (int(idcode),
+            revision, partnumber, manufacturer, ieee))
         return idcode
 
 

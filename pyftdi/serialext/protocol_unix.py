@@ -1,3 +1,4 @@
+from __future__ import print_function
 # Copyright (c) 2008-2015, Emmanuel Blot <emmanuel.blot@free.fr>
 # All rights reserved.
 #
@@ -75,7 +76,7 @@ class SocketSerial(SerialBase):
                     filename = os.path.join(home, filename[2:])
             self._filename = filename
             self.sock.connect(self._filename)
-        except Exception, e:
+        except Exception as e:
             self.close()
             msg = "Could not open port: %s" % (str(e))
             if isinstance(e, socket.error):
@@ -89,11 +90,11 @@ class SocketSerial(SerialBase):
         if self.sock:
             try:
                 self.sock.shutdown(socket.SHUT_RDWR)
-            except Exception, e:
+            except Exception as e:
                 pass
             try:
                 self.sock.close()
-            except Exception, e:
+            except Exception as e:
                 pass
             self.sock = None
         self._isOpen = False
@@ -139,7 +140,7 @@ class SocketSerial(SerialBase):
                         raise serial.writeTimeoutError
                 n = self.sock.send(d)
                 if self._dump:
-                    print hexdump(d[:n])
+                    print(hexdump(d[:n]))
                 if self._writeTimeout is not None and self._writeTimeout > 0:
                     _, ready, _ = select.select([], [self.sock], [],
                                                 self._writeTimeout)
@@ -147,7 +148,7 @@ class SocketSerial(SerialBase):
                         raise serial.writeTimeoutError
                 d = d[n:]
                 t = t - n
-            except OSError, e:
+            except OSError as e:
                 if e.errno != errno.EAGAIN:
                     raise
 

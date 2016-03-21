@@ -377,7 +377,7 @@ class Ftdi(object):
                                           index, '', self.usb_write_timeout):
                 raise FtdiError('Unable to set baudrate')
             self.baudrate = baudrate
-        except usb.core.USBError, e:
+        except usb.core.USBError as e:
             raise FtdiError('UsbError: %s' % str(e))
 
     def set_frequency(self, frequency):
@@ -493,7 +493,7 @@ class Ftdi(object):
                                           Ftdi.SIO_SET_FLOW_CTRL, 0,
                                           value, '', self.usb_write_timeout):
                 raise FtdiError('Unable to set flow control')
-        except usb.core.USBError, e:
+        except usb.core.USBError as e:
             raise FtdiError('UsbError: %s' % str(e))
 
     def set_dtr(self, state):
@@ -581,7 +581,7 @@ class Ftdi(object):
                     raise FtdiError("Usb bulk write error")
                 offset += length
             return offset
-        except usb.core.USBError, e:
+        except usb.core.USBError as e:
             raise FtdiError('UsbError: %s' % str(e))
 
     def read_data_bytes(self, size, attempt=1):
@@ -667,7 +667,7 @@ class Ftdi(object):
                                                 self.readoffset+part_size]
                         self.readoffset += part_size
                         return data
-        except usb.core.USBError, e:
+        except usb.core.USBError as e:
             raise FtdiError('UsbError: %s' % str(e))
         # never reached
         raise FtdiError("Internal error")
@@ -762,7 +762,7 @@ class Ftdi(object):
             return self.usb_dev.ctrl_transfer(Ftdi.REQ_OUT, reqtype, value,
                                               self.index, data,
                                               self.usb_write_timeout)
-        except usb.core.USBError, e:
+        except usb.core.USBError as e:
             raise FtdiError('UsbError: %s' % str(e))
 
     def _ctrl_transfer_in(self, reqtype, length):
@@ -771,7 +771,7 @@ class Ftdi(object):
             return self.usb_dev.ctrl_transfer(Ftdi.REQ_IN, reqtype, 0,
                                               self.index, length,
                                               self.usb_read_timeout)
-        except usb.core.USBError, e:
+        except usb.core.USBError as e:
             raise FtdiError('UsbError: %s' % str(e))
 
     def _write_v1(self, data):
@@ -927,7 +927,8 @@ class Ftdi(object):
     def __get_timeouts(self):
         return self.usb_read_timeout, self.usb_write_timeout
 
-    def __set_timeouts(self, (read_timeout, write_timeout)):
+    def __set_timeouts(self, xxx_todo_changeme):
+        (read_timeout, write_timeout) = xxx_todo_changeme
         self.usb_read_timeout = read_timeout
         self.usb_write_timeout = write_timeout
 

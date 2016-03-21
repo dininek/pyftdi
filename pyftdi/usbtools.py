@@ -1,3 +1,4 @@
+from __future__ import print_function
 # Copyright (C) 2010-2014 Emmanuel Blot <emmanuel.blot@free.fr>
 # All rights reserved.
 #
@@ -100,10 +101,10 @@ class UsbTools(object):
                             if not dev.is_kernel_driver_active(ifnum):
                                 continue
                             dev.detach_kernel_driver(ifnum)
-                        except NotImplementedError, e:
+                        except NotImplementedError as e:
                             # only libusb 1.x backend implements this method
                             break
-                        except usb.core.USBError, e:
+                        except usb.core.USBError as e:
                             pass
                 # only change the active configuration if the active one is
                 # not the first. This allows other libusb sessions running
@@ -328,7 +329,7 @@ class UsbTools(object):
                 # high interfaces are dedicated to UARTs
                 interfaces.append((scheme, vendor, product, serial, j, d))
         if interfaces:
-            print >> out, "Available interfaces:"
+            print("Available interfaces:", file=out)
             for scheme, vendor, product, serial, j, d in interfaces:
                 if d:
                     desc = '  (%s)' % d
@@ -338,8 +339,8 @@ class UsbTools(object):
                 # emitted in the output stream encoding format, so replace
                 # them
                 enc_report = report.encode(out.encoding, 'replace')
-                print >> out, enc_report
-            print >> out, ''
+                print(enc_report, file=out)
+            print('', file=out)
 
     @classmethod
     def get_string(cls, device, strname):

@@ -27,6 +27,7 @@
 
 """Simple Python serial terminal
 """
+from __future__ import print_function
 
 import os
 import sys
@@ -79,7 +80,7 @@ class MiniTerm(object):
         # wait forever, although Windows is stupid and does not signal Ctrl+C,
         # so wait use a 1/2-second timeout that gives some time to check for a
         # Ctrl+C break then polls again...
-        print 'Entering minicom mode'
+        print('Entering minicom mode')
         sys.stdout.flush()
         self._port.timeout = 0.5
         self._resume = True
@@ -103,11 +104,11 @@ class MiniTerm(object):
                     sys.stdout.flush()
         except KeyboardInterrupt:
             return
-        except Exception, e:
-            print "Exception: %s" % e
+        except Exception as e:
+            print("Exception: %s" % e)
             if self._debug:
                 import traceback
-                print >> sys.stderr, traceback.format_exc()
+                print(traceback.format_exc(), file=sys.stderr)
             import thread
             thread.interrupt_main()
 
@@ -122,7 +123,7 @@ class MiniTerm(object):
                 else:
                     self._port.write(c)
             except KeyboardInterrupt:
-                print '%sAborting...' % os.linesep
+                print('%sAborting...' % os.linesep)
                 self._cleanup()
                 return
 
@@ -142,7 +143,7 @@ class MiniTerm(object):
                 self._port.read()
             self._port.close()
             self._port = None
-            print 'Bye.'
+            print('Bye.')
 
     @staticmethod
     def _open_port(device, baudrate, logfile=False, debug=False):
@@ -170,9 +171,9 @@ class MiniTerm(object):
             if not port.isOpen():
                 raise AssertionError('Cannot open port "%s"' % device)
             if debug:
-                print "Using serial backend '%s'" % port.BACKEND
+                print("Using serial backend '%s'" % port.BACKEND)
             return port
-        except SerialException, e:
+        except SerialException as e:
             raise AssertionError(str(e))
 
 
@@ -213,11 +214,11 @@ def main():
                             debug=options.debug)
         miniterm.run(os.name in ('posix', ) and options.fullmode or False,
                      options.reset, options.select)
-    except (AssertionError, IOError, ValueError), e:
-        print >> sys.stderr, '\nError: %s' % e
+    except (AssertionError, IOError, ValueError) as e:
+        print('\nError: %s' % e, file=sys.stderr)
         if options.debug:
             import traceback
-            print >> sys.stderr, traceback.format_exc()
+            print(traceback.format_exc(), file=sys.stderr)
         sys.exit(1)
     except KeyboardInterrupt:
         sys.exit(2)

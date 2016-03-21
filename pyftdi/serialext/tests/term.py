@@ -29,6 +29,7 @@
 
 import os
 import sys
+import atexit
 
 _INIT = False
 
@@ -52,7 +53,7 @@ def _init_term(fullterm):
         def cleanup_console():
             termios.tcsetattr(fd, termios.TCSAFLUSH, old)
             # terminal modes have to be restored on exit...
-        sys.exitfunc = cleanup_console
+        atexit.register(cleanup_console)
         return True
     else:
         return True
@@ -68,7 +69,7 @@ def getkey(fullterm=False):
         # w/ py2exe, it seems the importation fails to define the global
         # symbol 'msvcrt', to be fixed
         import msvcrt
-        while 1:
+        while True:
             z = msvcrt.getch()
             if z == '\3':
                 raise KeyboardInterrupt('Ctrl-C break')
